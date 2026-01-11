@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SwimPal - Treningi Pływackie</title>
+
+    <!-- Plik ze stylami -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Nawigacja -->
+        <nav class="nav">
+            <h1>UniversalTraining</h1>
+            <ul class="nav-links">
+                <li><a href="#" onclick="showView('login')">Logowanie</a></li>
+                <li><a href="#" onclick="showView('create')">Nowy Trening</a></li>
+                <li><a href="#" onclick="showView('history')">Historia</a></li>
+                <li><a href="#" onclick="logout()">Wyloguj</a></li>
+            </ul>
+        </nav>
+
+        <!-- Widok Logowanie/Rejestracja -->
+        <div id="login" class="view active">
+            <div class="auth-container">
+                <div class="auth-form">
+                    <h2 id="auth-title">Logowanie</h2>
+                    <form id="auth-form">
+                        <div class="input-group">
+                            <input type="email" id="email" placeholder="Adres email" required>
+                        </div>
+                        <div class="input-group">
+                            <input type="password" id="password" placeholder="Hasło" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Zaloguj się</button>
+                    </form>
+                    <a href="#" class="toggle-link" onclick="toggleAuth()">Nie masz konta? Zarejestruj się</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard -->
+        <div id="dashboard" class="view">
+            <div class="dashboard-grid">
+                <div class="card">
+                    <div class="stat-number">12</div>
+                    <h3>Treningi</h3>
+                    <p>W tym miesiącu</p>
+                </div>
+                <div class="card">
+                    <div class="stat-number">2450m</div>
+                    <h3>Dystans</h3>
+                    <p>Całkowity</p>
+                </div>
+                <div class="card">
+                    <div class="stat-number">4.2h</div>
+                    <h3>Czas</h3>
+                    <p>Średnio/tydzień</p>
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <h2>Gotowy na kolejny trening?</h2>
+                <button class="btn btn-primary" style="width: 300px; font-size: 1.3rem;" onclick="showView('create')">Utwórz nowy trening</button>
+            </div>
+        </div>
+
+        <!-- Ekran tworzenia treningu -->
+        <div id="create" class="view">
+            <h2 style="text-align: center; margin-bottom: 2rem;">Nowy Trening</h2>
+            <div class="workout-types">
+                <div class="workout-type">
+                    <button type="button" class="type-btn active" data-type="swim">🏊 Pływanie</button>
+                </div>
+                <div class="workout-type">
+                    <button type="button" class="type-btn" data-type="run">🏃 Bieganie</button>
+                </div>
+                <div class="workout-type">
+                    <button type="button" class="type-btn" data-type="gym">💪 Siłownia</button>
+                </div>
+            </div>
+
+            <!-- Formularz Pływanie -->
+            <div id="swim-form" class="form-section active">
+                <div class="form-row">
+                    <div class="input-group">
+                        <input type="number" placeholder="Dystans (m)" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="number" placeholder="Czas (min)" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <input type="text" placeholder="Styl (np. kraul, klasyczny)" style="width: 100%;">
+                </div>
+            </div>
+
+            <!-- Formularz Bieganie -->
+            <div id="run-form" class="form-section">
+                <div class="form-row">
+                    <div class="input-group">
+                        <input type="number" placeholder="Dystans (km)" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="number" placeholder="Czas (min)" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <input type="text" placeholder="Teren (asfalt, las)" style="width: 100%;">
+                </div>
+            </div>
+
+            <!-- Formularz Siłownia -->
+            <div id="gym-form" class="form-section">
+                <div class="form-row">
+                    <div class="input-group">
+                        <input type="number" placeholder="Liczba serii" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="number" placeholder="Powtórzenia/seria" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <input type="text" placeholder="Ćwiczenia (np. przysiady, pompki)" style="width: 100%;">
+                </div>
+            </div>
+
+            <button class="btn btn-primary" style="width: 100%; font-size: 1.2rem;">Zapisz Trening</button>
+        </div>
+
+        <!-- Historia -->
+        <div id="history" class="view">
+            <h2 style="text-align: center; margin-bottom: 2rem;">Historia Treningów</h2>
+            <div class="history-list">
+                <div class="history-item">
+                    <div class="history-info">
+                        <h3>🏊 Pływanie - Kraul 2000m</h3>
+                        <div class="history-meta">45min • 12.01.2026 • 2000m</div>
+                    </div>
+                    <div>
+                        <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Edytuj</button>
+                        <button class="btn" style="background: #ff4757; padding: 0.5rem 1rem; font-size: 0.9rem; margin-left: 0.5rem;">Usuń</button>
+                    </div>
+                </div>
+                <div class="history-item">
+                    <div class="history-info">
+                        <h3>🏃 Bieganie - 10km</h3>
+                        <div class="history-meta">52min • 10.01.2026 • 10km</div>
+                    </div>
+                    <div>
+                        <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Edytuj</button>
+                        <button class="btn" style="background: #ff4757; padding: 0.5rem 1rem; font-size: 0.9rem; margin-left: 0.5rem;">Usuń</button>
+                    </div>
+                </div>
+                <div class="history-item">
+                    <div class="history-info">
+                        <h3>💪 Siłownia - Full Body</h3>
+                        <div class="history-meta">60min • 08.01.2026 • 4 serie</div>
+                    </div>
+                    <div>
+                        <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Edytuj</button>
+                        <button class="btn" style="background: #ff4757; padding: 0.5rem 1rem; font-size: 0.9rem; margin-left: 0.5rem;">Usuń</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
