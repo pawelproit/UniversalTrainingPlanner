@@ -14,14 +14,24 @@ nav {
 nav a {
   color: white;
   text-decoration: none;
-  margin: 0 15px;
+  margin: 0 10px;
   padding: 5px 10px;
   border-radius: 4px;
   transition: background-color 0.3s;
+  display: inline-block;
 }
 
 nav a:hover {
   background-color: #555;
+}
+
+/* Ukrywanie elementów dla niezalogowanych */
+.auth-only {
+  display: none;
+}
+
+body.logged-in .auth-only {
+  display: inline-block;
 }
 
 main {
@@ -52,15 +62,17 @@ form {
 label {
   display: block;
   margin-bottom: 5px;
+  font-weight: bold;
 }
 
 input,
 select {
   width: 100%;
-  padding: 8px;
+  padding: 10px;
   margin-bottom: 15px;
   border: 1px solid #ddd;
   border-radius: 4px;
+  box-sizing: border-box; /* Ważne przy width: 100% */
 }
 
 button {
@@ -70,9 +82,10 @@ button {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  width: 100%;
+  font-size: 16px;
 }
 
 button:hover {
   background-color: #45a049;
 }
-
