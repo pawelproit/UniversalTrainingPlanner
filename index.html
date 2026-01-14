@@ -1,85 +1,96 @@
 <!DOCTYPE html>
 <html lang="pl">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Universal Training Planner</title>
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <nav>
-            <a href="#home">Home</a>
-            <a href="#running" class="auth-only">Bieganie</a>
-            <a href="#swimming" class="auth-only">Pływanie</a>
-            <a href="#strength" class="auth-only">Siłownia</a>
-            <a href="#"
-               id="logout-btn"
-               class="auth-only"
-               style="background-color: #f44336">Wyloguj</a>
-        </nav>
-        <main>
-            <div id="login-view" class="view active">
-                <h1>Logowanie / Rejestracja</h1>
-                <form id="auth-form">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" required>
-                    <label for="password">Hasło:</label>
-                    <input type="password" id="password" required>
-                    <button type="submit" id="login-btn">Zaloguj</button>
-                    <button type="button"
-                            id="register-btn"
-                            style="background-color: #2196F3;
-                                   margin-top: 10px;
-                                   width: 100%">Zarejestruj</button>
-                </form>
-                <p id="auth-error"
-                   style="color: red;
-                          margin-top: 15px;
-                          text-align: center"></p>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universal Training Planner</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav id="main-nav">
+        <a href="#home" class="nav-link">Home</a>
+        <a href="#running" class="nav-link auth-only">Bieganie</a>
+        <a href="#swimming" class="nav-link auth-only">Pływanie</a>
+        <a href="#strength" class="nav-link auth-only">Siłownia</a>
+        <a href="#history" class="nav-link auth-only">Historia treningów</a>
+        <a href="#" id="logout-btn" class="auth-only" style="background-color: #f44336">Wyloguj</a>
+    </nav>
+    <main>
+        <div id="login-view" class="view active">
+            <h1>Logowanie / Rejestracja</h1>
+            <form id="auth-form">
+                <label for="email">Email:</label>
+                <input type="email" id="email" required>
+                <label for="password">Hasło:</label>
+                <input type="password" id="password" required>
+                <button type="submit" id="login-btn">Zaloguj</button>
+                <button type="button" id="register-btn" 
+                        style="background-color: #2196F3; margin-top: 10px; width: 100%">
+                    Zarejestruj
+                </button>
+            </form>
+            <p id="auth-error" style="color: red; margin-top: 15px; text-align: center"></p>
+        </div>
+        
+        <div id="home" class="view">
+            <h1>Witaj w Universal Training Planner</h1>
+            <p>Wybierz rodzaj treningu aby zaplanować sesję.</p>
+        </div>
+        
+        <div id="running" class="view">
+            <h1>Bieganie</h1>
+            <div class="training-section">
+                <label for="running-name">Nazwa treningu:</label>
+                <input type="text" id="running-name" placeholder="Nazwa treningu*" required>
+                <button onclick="addRunningTask()">Dodaj zadanie</button>
+                <div id="running-tasks" class="tasks-list"></div>
+                <button onclick="saveTraining('running')" 
+                        style="background: #2196F3; margin-top: 20px">
+                    Zapisz trening
+                </button>
             </div>
-            <div id="home" class="view">
-                <h1>Witaj w Universal Training Planner</h1>
-                <p>Wybierz rodzaj treningu aby zaplanować sesję.</p>
+        </div>
+        
+        <div id="swimming" class="view">
+            <h1>Pływanie</h1>
+            <div class="training-section">
+                <label for="swimming-name">Nazwa treningu:</label>
+                <input type="text" id="swimming-name" placeholder="Nazwa treningu*" required>
+                <button onclick="addSwimmingTask()">Dodaj zadanie</button>
+                <div id="swimming-tasks" class="tasks-list"></div>
+                <button onclick="saveTraining('swimming')" 
+                        style="background: #2196F3; margin-top: 20px">
+                    Zapisz trening
+                </button>
             </div>
-            <div id="running" class="view">
-                <h1>Bieganie</h1>
-                <div class="training-section">
-                    <label for="running-name">Nazwa treningu:</label>
-                    <input type="text" id="running-name" placeholder="Np. Interwały sobotnie">
-                    <button onclick="addRunningTask()">Dodaj zadanie</button>
-                    <div id="running-tasks" class="tasks-list"></div>
-                    <button onclick="saveTraining('running')"
-                            style="background: #2196F3;
-                                   margin-top: 20px">Zapisz trening</button>
-                </div>
+        </div>
+        
+        <div id="strength" class="view">
+            <h1>Siłownia</h1>
+            <div class="training-section">
+                <label for="strength-name">Nazwa treningu:</label>
+                <input type="text" id="strength-name" placeholder="Nazwa treningu*" required>
+                <button onclick="addStrengthExercise()">Dodaj ćwiczenie</button>
+                <div id="strength-tasks" class="tasks-list"></div>
+                <button onclick="saveTraining('strength')" 
+                        style="background: #2196F3; margin-top: 20px">
+                    Zapisz trening
+                </button>
             </div>
-            <div id="swimming" class="view">
-                <h1>Pływanie</h1>
-                <div class="training-section">
-                    <label for="swimming-name">Nazwa treningu:</label>
-                    <input type="text"
-                           id="swimming-name"
-                           placeholder="Np. Technika + wytrzymałość">
-                    <button onclick="addSwimmingTask()">Dodaj zadanie</button>
-                    <div id="swimming-tasks" class="tasks-list"></div>
-                    <button onclick="saveTraining('swimming')"
-                            style="background: #2196F3;
-                                   margin-top: 20px">Zapisz trening</button>
-                </div>
+        </div>
+        
+        <div id="history" class="view">
+            <h1>Historia treningów</h1>
+            <div class="history-controls">
+                <button id="refresh-history-btn" class="refresh-btn">
+                    🔄 Odśwież historię
+                </button>
+                <div class="history-stats" id="history-stats"></div>
             </div>
-            <div id="strength" class="view">
-                <h1>Siłownia</h1>
-                <div class="training-section">
-                    <label for="strength-name">Nazwa treningu:</label>
-                    <input type="text" id="strength-name" placeholder="Np. Push Day">
-                    <button onclick="addStrengthExercise()">Dodaj ćwiczenie</button>
-                    <div id="strength-tasks" class="tasks-list"></div>
-                    <button onclick="saveTraining('strength')"
-                            style="background: #2196F3;
-                                   margin-top: 20px">Zapisz trening</button>
-                </div>
-            </div>
-        </main>
-        <script type="module" src="main.js"></script>
-    </body>
+            <div id="history-list"></div>
+        </div>
+    </main>
+    
+    <script type="module" src="main.js"></script>
+</body>
 </html>
