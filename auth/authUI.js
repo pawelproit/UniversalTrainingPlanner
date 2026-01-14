@@ -17,9 +17,32 @@ export function setupAuthUI() {
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      window.location.hash = "#home";
+      emailInput.value = "";
+      passwordInput.value = "";
     } catch (error) {
       if (authError) {
-        authError.textContent = "Błąd logowania: " + error.message;
+        let errorMessage = "Błąd logowania: ";
+        switch (error.code) {
+          case 'auth/invalid-email':
+            errorMessage += "Nieprawidłowy adres email";
+            break;
+          case 'auth/user-disabled':
+            errorMessage += "Konto zostało zablokowane";
+            break;
+          case 'auth/user-not-found':
+            errorMessage += "Nie znaleziono użytkownika";
+            break;
+          case 'auth/wrong-password':
+            errorMessage += "Nieprawidłowe hasło";
+            break;
+          case 'auth/too-many-requests':
+            errorMessage += "Zbyt wiele prób logowania. Spróbuj później";
+            break;
+          default:
+            errorMessage += error.message;
+        }
+        authError.textContent = errorMessage;
       }
       console.error("Login error:", error);
     }
@@ -32,11 +55,38 @@ export function setupAuthUI() {
       const password = passwordInput.value;
       if (authError) authError.textContent = "";
 
+      if (password.length < 6) {
+        if (authError) {
+          authError.textContent = "Hasło musi mieć co najmniej 6 znaków";
+        }
+        return;
+      }
+
       try {
         await createUserWithEmailAndPassword(auth, email, password);
+        window.location.hash = "#home";
+        emailInput.value = "";
+        passwordInput.value = "";
       } catch (error) {
         if (authError) {
-          authError.textContent = "Błąd rejestracji: " + error.message;
+          let errorMessage = "Błąd rejestracji: ";
+          switch (error.code) {
+            case 'auth/email-already-in-use':
+              errorMessage += "Email jest już używany";
+              break;
+            case 'auth/invalid-email':
+              errorMessage += "Nieprawidłowy adres email";
+              break;
+            case 'auth/operation-not-allowed':
+              errorMessage += "Rejestracja jest obecnie wyłączona";
+              break;
+            case 'auth/weak-password':
+              errorMessage += "Hasło jest za słabe";
+              break;
+            default:
+              errorMessage += error.message;
+          }
+          authError.textContent = errorMessage;
         }
         console.error("Register error:", error);
       }

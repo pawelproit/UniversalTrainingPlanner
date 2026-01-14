@@ -13,9 +13,14 @@
         <a href="#swimming" class="nav-link auth-only">Pływanie</a>
         <a href="#strength" class="nav-link auth-only">Siłownia</a>
         <a href="#history" class="nav-link auth-only">Historia treningów</a>
-        <a href="#" id="logout-btn" class="auth-only" style="background-color: #f44336">Wyloguj</a>
+        <a href="#profile" class="nav-link auth-only">Profil</a>
+        <a href="#" id="logout-btn" class="auth-only" style="background-color: #f44336">Wyloguj</a> 
     </nav>
     <main>
+        <div id="profile" class="view">
+            <h1>Twój profil</h1>
+            <div id="profile-content"></div>
+        </div>
         <div id="login-view" class="view active">
             <h1>Logowanie / Rejestracja</h1>
             <form id="auth-form">
@@ -79,16 +84,57 @@
             </div>
         </div>
         
-        <div id="history" class="view">
-            <h1>Historia treningów</h1>
-            <div class="history-controls">
+    <div id="history" class="view">
+        <h1>Historia treningów</h1>
+        <div class="history-controls">
+            <div class="controls-left">
                 <button id="refresh-history-btn" class="refresh-btn">
-                    🔄 Odśwież historię
+                    🔄 Odśwież
                 </button>
-                <div class="history-stats" id="history-stats"></div>
+                <button id="export-history-btn" class="export-btn">
+                    📤 Eksportuj
+                </button>
             </div>
-            <div id="history-list"></div>
+            <div class="controls-right">
+                <select id="sort-history" class="sort-select">
+                    <option value="date-desc">Najnowsze</option>
+                    <option value="date-asc">Najstarsze</option>
+                    <option value="name">Nazwa A-Z</option>
+                    <option value="type">Typ treningu</option>
+                </select>
+            </div>
         </div>
+        <style>
+.controls-left, .controls-right {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.export-btn {
+    background: #9C27B0;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.export-btn:hover {
+    background: #7B1FA2;
+}
+
+.sort-select {
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 0.95rem;
+}
+</style>
+    <div id="history-stats"></div>
+    <div id="history-list"></div>
+</div>
     </main>
     
     <script type="module" src="main.js"></script>
