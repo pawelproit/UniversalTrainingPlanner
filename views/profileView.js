@@ -44,24 +44,8 @@ export class ProfileView {
         swimming: trainings.filter(t => t.type === 'swimming').length,
         strength: trainings.filter(t => t.type === 'strength').length
       },
-      recentTrainings: trainings.slice(0, 10), // Pierwsze 10 najnowszych
-      volumeStats: {}
+      recentTrainings: trainings.slice(0, 10) // Pierwsze 10 najnowszych
     };
-
-    // Oblicz objętość dla siłowni
-    const strengthTrainings = trainings.filter(t => t.type === 'strength');
-    let totalVolume = 0;
-    strengthTrainings.forEach(training => {
-      if (training.tasks) {
-        training.tasks.forEach(task => {
-          const sets = parseInt(task.sets) || 0;
-          const reps = parseInt(task.reps) || 0;
-          const weight = parseFloat(task.weight) || 0;
-          totalVolume += sets * reps * weight;
-        });
-      }
-    });
-    stats.volumeStats.strength = Math.round(totalVolume);
 
     return stats;
   }
@@ -127,15 +111,6 @@ export class ProfileView {
                 <div class="stat-label">Siłowych</div>
               </div>
             </div>
-            ${this.userStats?.volumeStats?.strength ? `
-            <div class="stat-card">
-              <div class="stat-icon">📊</div>
-              <div class="stat-content">
-                <div class="stat-number">${this.userStats.volumeStats.strength}kg</div>
-                <div class="stat-label">Łączna objętość</div>
-              </div>
-            </div>
-            ` : ''}
           </div>
         </div>
 
